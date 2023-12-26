@@ -21,5 +21,10 @@ public class ControlPlayer : MonoBehaviour
 
         // deltaTime retorna o tempo em segundos que a Unity demorou para rodar o último frame, onde no cálculo irá resultar em movimento por segundo
         transform.Translate((direcao * Time.deltaTime) * Velocidade);
+
+        if(direcao != Vector3.zero)
+            GetComponent<Animator>().SetBool("Correndo", true);
+        else
+            GetComponent<Animator>().SetBool("Correndo", false);
     }
 }
