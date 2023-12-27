@@ -16,15 +16,34 @@ public class ControlPlayer : MonoBehaviour
     {
         float eixoX = Input.GetAxis("Horizontal");
         float eixoZ = Input.GetAxis("Vertical");
+        bool andar = Input.GetKey(KeyCode.LeftShift);
 
         Vector3 direcao = new Vector3(eixoX, 0, eixoZ);
 
-        // deltaTime retorna o tempo em segundos que a Unity demorou para rodar o último frame, onde no cálculo irá resultar em movimento por segundo
-        transform.Translate((direcao * Time.deltaTime) * Velocidade);
 
         if(direcao != Vector3.zero)
-            GetComponent<Animator>().SetBool("Correndo", true);
+        {
+            if (andar)
+            {
+                GetComponent<Animator>().SetBool("Andando", true);
+                GetComponent<Animator>().SetBool("Correndo", false);
+                Velocidade = 5;
+            }
+            else
+            {
+                GetComponent<Animator>().SetBool("Correndo", true);
+                GetComponent<Animator>().SetBool("Andando", false);
+                Velocidade = 10;
+            }
+
+        }
         else
+        {
             GetComponent<Animator>().SetBool("Correndo", false);
+            GetComponent<Animator>().SetBool("Andando", false);
+        }
+
+        // deltaTime retorna o tempo em segundos que a Unity demorou para rodar o último frame, onde no cálculo irá resultar em movimento por segundo
+        transform.Translate((direcao * Time.deltaTime) * Velocidade);
     }
 }
